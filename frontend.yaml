@@ -2,39 +2,39 @@
   become: yes
   hosts: #ip address
   tasks:
-   - name: install nginx
-     ansible.builtin.dnf:
-       name: nginx
-       state: latest
+  - name: install nginx
+    ansible.builtin.dnf:
+      name: nginx
+      state: latest
   
-   - name: start and enable nginx
-     ansible.builtin.service:
+  - name: start and enable nginx
+    ansible.builtin.service:
       name: nginx
       state: started
       enabled: yes
 
-   - name: delete default website
-     ansible.builtin.file:
+  - name: delete default website
+    ansible.builtin.file:
      path: /usr/share/nginx/html/
      state: absent
 
-   - name: create html directory
-     ansible.builtin.file:
+  - name: create html directory
+    ansible.builtin.file:
       path: /usr/share/nginx/html
       state: directory
 
-   - name: download and unzip the code
-     ansible.builtin.unarchive:
+  - name: download and unzip the code
+    ansible.builtin.unarchive:
       src: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
       dest: /usr/share/nginx/html
       remote_src: yes
 
-   - name: copy frontend file
-     ansible.builtin.copy:
+  - name: copy frontend file
+    ansible.builtin.copy:
       src: expense.conf
       dest: /etc/nginx/default.d/expense.conf
 
-   - name: restart nginx
-     ansible.builtin.service:
+  - name: restart nginx
+    ansible.builtin.service:
       name: nginx
       state: restarted
