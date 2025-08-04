@@ -2,7 +2,7 @@
   hosts: db
   become: yes
   vars:
-   login_host: #ip address
+   login_host: 172.31.81.247
   vars_prompt:
    - name: mysql_root_password
      prompt: "plesae enter your password"
@@ -19,12 +19,12 @@
       state: started
       enabled: yes
     
-   - name: install python mysql depencies
+   - name: install python mysql dependencies
      ansible.builtin.pip:
-     name:
-     - PyMySQL
-     - cryptography
-     executable: pip3.9 # pip3.11 if python version is 3.11
+      name:
+      - PyMySQL
+      - cryptography
+      executable: pip3.9 # pip3.11 if python version is 3.11
      
    - name: check db connection
      community.mysql.mysql_info:
